@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaFamilyAI - WhatsApp Family Assistant</title>
-    <meta name="description" content="The AI-powered family assistant that works through WhatsApp. Organize calendars, tasks, and reminders for your entire family.">
+    <title>LaFamilyAI - AI-Powered WhatsApp Family Assistant</title>
+    <meta name="description" content="The AI-powered family assistant that works through WhatsApp. Smart family coordination with artificial intelligence.">
     
     <style>
         * {
@@ -14,317 +14,801 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #374151;
+            scroll-behavior: smooth;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 1rem;
         }
         
         /* Header */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
+            position: sticky;
             top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            z-index: 40;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(236, 72, 153, 0.1);
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fff1f2 50%, #fef7ff 100%);
+            color: #1f2937;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            bottom: 20%;
+            left: 10%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(219, 39, 119, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
         }
         
         nav {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
             padding: 1rem 0;
+            position: relative;
+            z-index: 10;
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #4CAF50;
-        }
-        
-        .contact-btn {
-            background: #25D366;
-            color: white;
-            padding: 0.5rem 1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #1f2937;
             text-decoration: none;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: transform 0.2s;
+            font-size: 1.25rem;
         }
         
-        .contact-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        .nav-links {
+            display: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #ec4899;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: #ec4899;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #db2777;
+            transform: translateY(-1px);
+        }
+        
+        .btn-lg {
+            padding: 0.875rem 1.75rem;
+            font-size: 1rem;
+        }
+        
+        .btn-full {
+            width: 100%;
+            justify-content: center;
         }
         
         /* Hero Section */
         .hero {
-            padding: 120px 0 80px;
+            padding: 8rem 0 6rem;
             text-align: center;
-            color: white;
+            position: relative;
+            z-index: 5;
         }
         
         .hero h1 {
             font-size: 3rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
+            font-weight: 300;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .hero .highlight {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 400;
         }
         
         .hero .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .hero .description {
-            font-size: 1.1rem;
-            max-width: 600px;
+            color: #6b7280;
+            max-width: 32rem;
             margin: 0 auto 2rem;
-            opacity: 0.8;
+            font-size: 1.125rem;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
         }
         
-        .whatsapp-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        /* Features Section */
-        .features {
-            background: white;
-            padding: 80px 0;
-        }
-        
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
+        .hero-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
             margin-bottom: 3rem;
-            color: #333;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
         }
         
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        .trust-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
             gap: 2rem;
-            margin-top: 2rem;
+            color: #9ca3af;
+            font-size: 0.875rem;
         }
         
-        .feature-card {
-            padding: 2rem;
-            border-radius: 15px;
-            background: #f8f9fa;
+        .trust-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-lg {
+            padding: 6rem 0;
+        }
+        
+        .section-white {
+            background: white;
+        }
+        
+        .section-gray {
+            background: #fafafa;
+        }
+        
+        .section-title {
             text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid #e9ecef;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .feature-card .icon {
             font-size: 2.5rem;
+            font-weight: 300;
             margin-bottom: 1rem;
-            display: block;
+            color: #1f2937;
         }
         
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: #333;
+        .section-subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 3rem;
+            font-size: 1.125rem;
         }
         
-        .feature-card p {
-            color: #666;
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+        
+        /* Cards */
+        .card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(236, 72, 153, 0.1);
+        }
+        
+        .card-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+            color: #ec4899;
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+        
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+        
+        .card p {
+            color: #6b7280;
             line-height: 1.6;
         }
         
-        /* How it works */
-        .how-it-works {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        /* Feature cards */
+        .feature-card {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #1f2937;
+            transition: border-color 0.3s ease;
         }
         
-        .how-it-works h2 {
-            text-align: center;
+        .feature-card:hover {
+            border-color: #fce7f3;
+        }
+        
+        .feature-icon {
+            color: #ec4899;
+        }
+        
+        /* Pricing */
+        .pricing-card {
+            max-width: 28rem;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(236, 72, 153, 0.1);
+            border: 1px solid #fce7f3;
+            padding: 2.5rem;
+        }
+        
+        .pricing-header {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .price {
             font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
+            font-weight: 600;
+            line-height: 1.2;
+            color: #1f2937;
         }
         
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+        .price-period {
+            color: #6b7280;
         }
         
-        .step {
-            text-align: center;
+        .early-access {
+            font-size: 0.875rem;
+            color: #ec4899;
+            font-weight: 500;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+        }
+        
+        .check-icon {
+            color: #10b981;
+            margin-top: 0.125rem;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            background: white;
+            border: 1px solid #f3f4f6;
+            border-radius: 1rem;
             padding: 1.5rem;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
         }
         
-        .step-number {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background: #25D366;
-            color: white;
-            border-radius: 50%;
-            line-height: 50px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
+        .faq-item:hover {
+            border-color: #fce7f3;
         }
         
-        .step h3 {
-            margin-bottom: 1rem;
-            color: #333;
+        .faq-question {
+            font-weight: 500;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+        
+        .faq-answer {
+            color: #6b7280;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        .faq-toggle {
+            color: #9ca3af;
+            transition: transform 0.3s ease;
+            font-size: 1.25rem;
+        }
+        
+        .faq-toggle.rotate {
+            transform: rotate(45deg);
         }
         
         /* Footer */
         footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
+            border-top: 1px solid #f3f4f6;
+            background: white;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 3rem 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .footer-links a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #ec4899;
+        }
+        
+        /* Cookie Consent */
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #f3f4f6;
+            padding: 1.5rem;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .cookie-consent.show {
+            display: block;
+        }
+        
+        .cookie-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        
+        .cookie-text {
+            color: #6b7280;
+            font-size: 0.875rem;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .cookie-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-secondary {
+            background: #f9fafb;
+            color: #6b7280;
+            border: 1px solid #d1d5db;
+        }
+        
+        .btn-secondary:hover {
+            background: #f3f4f6;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 2rem;
+            }
+            
+            .nav-links {
+                display: flex;
+            }
+            
             .hero h1 {
-                font-size: 2rem;
+                font-size: 4rem;
             }
             
-            .hero .subtitle {
-                font-size: 1.1rem;
+            .section-title {
+                font-size: 3rem;
             }
             
-            .features h2, .how-it-works h2 {
-                font-size: 2rem;
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
             }
             
-            nav {
-                flex-direction: column;
-                gap: 1rem;
+            .cookie-content {
+                flex-wrap: nowrap;
             }
         }
+        
+        /* Icons (using emojis) */
+        .icon {
+            display: inline-block;
+        }
+        
+        .icon-shield::before { content: "🛡️"; }
+        .icon-calendar::before { content: "📅"; }
+        .icon-bell::before { content: "🔔"; }
+        .icon-message::before { content: "💬"; }
+        .icon-check::before { content: "✓"; }
+        .icon-ai::before { content: "🤖"; }
+        .icon-family::before { content: "👨‍👩‍👧‍👦"; }
+        .icon-smart::before { content: "🧠"; }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">LaFamilyAI</div>
-            <a href="#contact" class="contact-btn">Contact Us</a>
-        </nav>
-    </header>
+    <div class="hero-bg">
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <nav>
+                    <a href="#" class="logo">LaFamilyAI</a>
+                    <div class="nav-links">
+                        <a href="#pricing">Pricing</a>
+                        <a href="#faq">FAQ</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <a href="mailto:cb@lafamilyai.com" class="btn btn-primary">Join waitlist</a>
+                </nav>
+            </div>
+        </header>
 
-    <section class="hero">
-        <div class="container">
-            <div class="whatsapp-icon">📱</div>
-            <h1>Your Family's AI Assistant</h1>
-            <p class="subtitle">The WhatsApp-first family operating system</p>
-            <p class="description">
-                Organize your family's calendar, tasks, and reminders through simple WhatsApp messages. 
-                No new apps to learn, no habits to change – just message naturally and let AI handle the rest.
-            </p>
-        </div>
-    </section>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container">
+                <h1>Family life, simplified with <span class="highlight">AI</span></h1>
+                <p class="subtitle">Smart family coordination powered by artificial intelligence. One WhatsApp chat for calendars, tasks, and reminders. No new apps needed.</p>
+                
+                <div class="hero-buttons">
+                    <a href="https://wa.me/34665027071" target="_blank" class="btn btn-primary btn-lg">
+                        <span class="icon icon-message"></span> Start with WhatsApp
+                    </a>
+                </div>
 
-    <section class="features">
+                <!-- Trust row -->
+                <div class="trust-row">
+                    <div class="trust-item">
+                        <span class="icon icon-ai"></span> AI-Powered
+                    </div>
+                    <div class="trust-item">
+                        <span class="icon icon-shield"></span> Privacy-first
+                    </div>
+                    <div class="trust-item">
+                        <span class="icon icon-calendar"></span> Google Calendar sync
+                    </div>
+                    <div class="trust-item">
+                        <span class="icon icon-bell"></span> Smart reminders
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- How it works -->
+    <section class="section-lg section-white">
         <div class="container">
-            <h2>Making Family Life Easier</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="icon">🗓️</span>
-                    <h3>Smart Calendar Sync</h3>
-                    <p>Automatically syncs with Google Calendar and Microsoft Outlook. Never miss an appointment again.</p>
+            <h2 class="section-title">How our AI works for your family</h2>
+            <p class="section-subtitle">Advanced artificial intelligence that understands your family's needs</p>
+
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-icon">
+                        <span class="icon icon-message"></span>
+                    </div>
+                    <h3>Chat naturally</h3>
+                    <p>Send a WhatsApp message like 'Dentist for Tomás Monday 9am'. Our AI understands natural language and family context.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <span class="icon">✅</span>
-                    <h3>Task Assignment</h3>
-                    <p>Assign tasks to family members with smart reminders. Everyone knows what they need to do.</p>
+                <div class="card">
+                    <div class="card-icon">
+                        <span class="icon icon-smart"></span>
+                    </div>
+                    <h3>AI organizes everything</h3>
+                    <p>Advanced algorithms automatically create events, assign tasks, detect conflicts, and sync with your family calendars.</p>
                 </div>
-                
-                <div class="feature-card">
-                    <span class="icon">🤖</span>
-                    <h3>AI-Powered Understanding</h3>
-                    <p>Text, voice, or photos – our AI understands your family's needs and organizes everything automatically.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="icon">⚡</span>
-                    <h3>Conflict Detection</h3>
-                    <p>Automatically detects scheduling conflicts before they cause stress. Smart suggestions for alternatives.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="icon">📊</span>
-                    <h3>Daily Digests</h3>
-                    <p>Personalized daily summaries for each parent. Start every day knowing what's ahead.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <span class="icon">🌍</span>
-                    <h3>Multi-Language</h3>
-                    <p>Supports Spanish and English. Communicate in the language that feels natural for your family.</p>
+                <div class="card">
+                    <div class="card-icon">
+                        <span class="icon icon-bell"></span>
+                    </div>
+                    <h3>Smart notifications</h3>
+                    <p>AI-powered reminders and personalized daily digests keep every family member informed and on track.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="how-it-works">
+    <!-- Features -->
+    <section class="section section-gray">
         <div class="container">
-            <h2>How It Works</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Message Naturally</h3>
-                    <p>Send text, voice notes, or photos to our WhatsApp bot: "Dentist appointment for María tomorrow at 5pm"</p>
+            <div class="grid grid-3">
+                <div class="feature-card">
+                    <span class="icon icon-check feature-icon"></span>
+                    <span>AI-powered family coordination</span>
                 </div>
-                
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>AI Understands</h3>
-                    <p>Our AI processes your message, extracts the important details, and asks any clarifying questions</p>
+                <div class="feature-card">
+                    <span class="icon icon-check feature-icon"></span>
+                    <span>Intelligent task assignment</span>
                 </div>
-                
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Auto-Organization</h3>
-                    <p>Events are created, tasks assigned, and calendars updated automatically across all family members</p>
+                <div class="feature-card">
+                    <span class="icon icon-check feature-icon"></span>
+                    <span>Smart conflict detection</span>
                 </div>
-                
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Stay Informed</h3>
-                    <p>Get reminders, daily digests, and conflict alerts – all delivered seamlessly through WhatsApp</p>
+                <div class="feature-card">
+                    <span class="icon icon-check feature-icon"></span>
+                    <span>Personalized AI insights</span>
+                </div>
+                <div class="feature-card">
+                    <span class="icon icon-check feature-icon"></span>
+                    <span>Multi-language AI understanding</span>
+                </div>
+                <div class="feature-card">
+                    <span class="icon icon-check feature-icon"></span>
+                    <span>Works from any phone</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Pricing -->
+    <section id="pricing" class="section-lg section-white">
+        <div class="container">
+            <h2 class="section-title">Simple pricing</h2>
+            <p class="section-subtitle">AI-powered family coordination at an affordable price</p>
+
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <div>
+                        <div class="price">€7.99</div>
+                        <div class="price-period">per family / month</div>
+                    </div>
+                    <div class="early-access">Early access price</div>
+                </div>
+                
+                <ul class="features-list">
+                    <li>
+                        <span class="icon icon-check check-icon"></span>
+                        <span>Up to 6 family members</span>
+                    </li>
+                    <li>
+                        <span class="icon icon-check check-icon"></span>
+                        <span>AI-powered WhatsApp interface</span>
+                    </li>
+                    <li>
+                        <span class="icon icon-check check-icon"></span>
+                        <span>Smart calendar synchronization</span>
+                    </li>
+                    <li>
+                        <span class="icon icon-check check-icon"></span>
+                        <span>Intelligent task management</span>
+                    </li>
+                    <li>
+                        <span class="icon icon-check check-icon"></span>
+                        <span>Priority AI support during beta</span>
+                    </li>
+                </ul>
+                
+                <a href="mailto:cb@lafamilyai.com" class="btn btn-primary btn-lg btn-full">Join the AI waitlist</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section-lg section-gray">
+        <div class="container">
+            <h2 class="section-title">Frequently asked questions</h2>
+            <div class="grid grid-2">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        How does the AI understand my messages?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">Our advanced AI uses natural language processing to understand family-specific context, names, dates, and tasks from your casual WhatsApp messages.</div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        Do I need to install an app?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">No. LaFamilyAI works entirely through WhatsApp using AI-powered chat interactions.</div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        Is my family data safe with AI processing?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">Yes. We use privacy-first AI that processes only necessary information and encrypts all family data. Your conversations remain private.</div>
+                </div>
+                
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        Can the AI handle multiple languages?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">Yes. Our AI is trained to understand and respond in multiple languages, perfect for multilingual families.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer id="contact">
         <div class="container">
-            <h3>LaFamilyAI</h3>
-            <p>Making family life easier, one task at a time.</p>
-            <p style="margin-top: 1rem; opacity: 0.7;">
-                Contact: <a href="mailto:cb@lafamilyai.com" style="color: #25D366;">cb@lafamilyai.com</a>
-            </p>
-            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.6;">
-                © 2025 LaFamilyAI. All rights reserved.
-            </p>
+            <div class="footer-content">
+                <p>© 2025 LaFamilyAI - AI-powered family coordination</p>
+                <div class="footer-links">
+                    <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
+                    <a href="#" onclick="showPrivacy()">Privacy</a>
+                    <a href="#" onclick="showTerms()">Terms</a>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <!-- Cookie Consent -->
+    <div class="cookie-consent" id="cookieConsent">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                We use cookies to improve your experience and analyze our AI performance. By continuing to use our site, you agree to our use of cookies.
+            </div>
+            <div class="cookie-buttons">
+                <button class="btn btn-secondary" onclick="rejectCookies()">Reject</button>
+                <button class="btn btn-primary" onclick="acceptCookies()">Accept</button>
+                <button class="btn btn-secondary" onclick="cookieSettings()">Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFaq(element) {
+            const answer = element.querySelector('.faq-answer');
+            const toggle = element.querySelector('.faq-toggle');
+            
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                toggle.classList.remove('rotate');
+            } else {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('show'));
+                document.querySelectorAll('.faq-toggle').forEach(t => t.classList.remove('rotate'));
+                
+                // Open this FAQ
+                answer.classList.add('show');
+                toggle.classList.add('rotate');
+            }
+        }
+
+        // Cookie consent functionality
+        function showCookieConsent() {
+            const consent = localStorage.getItem('cookieConsent');
+            if (!consent) {
+                document.getElementById('cookieConsent').classList.add('show');
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieConsent').classList.remove('show');
+        }
+
+        function rejectCookies() {
+            localStorage.setItem('cookieConsent', 'rejected');
+            document.getElementById('cookieConsent').classList.remove('show');
+        }
+
+        function cookieSettings() {
+            alert('Cookie settings: You can manage cookies in your browser settings. We only use essential cookies for AI performance analytics.');
+        }
+
+        function showPrivacy() {
+            alert('Privacy Policy: LaFamilyAI is committed to protecting your family\'s privacy. We use AI to process only necessary information and encrypt all data. Full privacy policy coming soon.');
+        }
+
+        function showTerms() {
+            alert('Terms of Service: By using LaFamilyAI, you agree to our AI-powered service terms. Full terms of service coming soon.');
+        }
+
+        // Show cookie consent on load
+        window.addEventListener('load', showCookieConsent);
+    </script>
 </body>
 </html>
