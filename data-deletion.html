@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instrucciones de Eliminación de Datos - LaFamilyAI</title>
+    <meta name="description" content="Cómo eliminar tus datos personales de LaFamilyAI">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.8;
+            color: #374151;
+            background: white;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(236, 72, 153, 0.1);
+            padding: 1rem 0;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 1.25rem;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ec4899;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateX(-4px);
+        }
+        
+        .page-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-header p {
+            color: #6b7280;
+            font-size: 1.125rem;
+        }
+        
+        .content h2 {
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .content h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            margin-top: 2rem;
+        }
+        
+        .content p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .content ul, .content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+            color: #4b5563;
+        }
+        
+        .content li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+        
+        .content strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+        
+        .method-box {
+            background: #fdf2f8;
+            border: 2px solid #fce7f3;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .method-box h3 {
+            color: #1f2937;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .method-box p {
+            margin-bottom: 0.75rem;
+        }
+        
+        .method-box strong {
+            display: block;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .method-box a {
+            color: #ec4899;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .method-box a:hover {
+            text-decoration: underline;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .warning-box p {
+            color: #991b1b;
+            margin: 0;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border: 2px solid #dbeafe;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .info-box p {
+            color: #1e40af;
+            margin: 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #fce7f3;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: #ec4899;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #fce7f3;
+        }
+
+        .timeline-item strong {
+            display: block;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">LaFamilyAI</a>
+            <a href="mailto:cb@lafamilyai.com" style="color: #ec4899; text-decoration: none; font-weight: 500;">Contacto</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-button">← Volver al inicio</a>
+        
+        <div class="page-header">
+            <h1>Instrucciones de Eliminación de Datos</h1>
+            <p>Cómo eliminar completamente tus datos personales de LaFamilyAI</p>
+        </div>
+
+        <div class="content">
+            <p>En LaFamilyAI, respetamos tu derecho a eliminar tus datos personales en cualquier momento. Esta página explica cómo puedes solicitar la eliminación completa de tu cuenta y todos tus datos asociados.</p>
+
+            <h2>Métodos de Eliminación de Datos</h2>
+
+            <div class="method-box">
+                <h3>Método 1: Desde tu Cuenta (Próximamente)</h3>
+                <p>Una vez que nuestro portal web esté disponible, podrás eliminar tu cuenta directamente:</p>
+                <ol>
+                    <li>Inicia sesión en tu cuenta de LaFamilyAI</li>
+                    <li>Ve a <strong>Configuración</strong> → <strong>Cuenta</strong></li>
+                    <li>Haz clic en <strong>"Eliminar mi cuenta"</strong></li>
+                    <li>Confirma la eliminación</li>
+                </ol>
+                <p><em>Esta funcionalidad estará disponible cuando lancemos el portal web.</em></p>
+            </div>
+
+            <div class="method-box">
+                <h3>Método 2: Por Correo Electrónico (Disponible Ahora)</h3>
+                <p>Envía un correo electrónico a:</p>
+                <p><strong>Email:</strong> <a href="mailto:cb@lafamilyai.com?subject=Solicitud%20de%20Eliminación%20de%20Datos">cb@lafamilyai.com</a></p>
+                <p><strong>Asunto:</strong> "Solicitud de Eliminación de Datos"</p>
+                <p><strong>Incluye en el mensaje:</strong></p>
+                <ul>
+                    <li>Tu nombre completo</li>
+                    <li>Tu dirección de correo electrónico registrada</li>
+                    <li>Tu número de teléfono de WhatsApp (si está vinculado)</li>
+                    <li>Una confirmación de que deseas eliminar todos tus datos</li>
+                </ul>
+            </div>
+
+            <div class="method-box">
+                <h3>Método 3: Por WhatsApp (Disponible Ahora)</h3>
+                <p>Envía un mensaje a nuestro asistente de WhatsApp:</p>
+                <p><strong>WhatsApp:</strong> <a href="https://wa.me/34665027071?text=Quiero%20eliminar%20mi%20cuenta%20y%20todos%20mis%20datos" target="_blank">+34 665 027 071</a></p>
+                <p><strong>Mensaje sugerido:</strong> "Quiero eliminar mi cuenta y todos mis datos"</p>
+                <p>Nuestro equipo te guiará a través del proceso de verificación y eliminación.</p>
+            </div>
+
+            <h2>¿Qué Datos se Eliminan?</h2>
+            <p>Cuando solicitas la eliminación de tus datos, eliminamos permanentemente:</p>
+            <ul>
+                <li><strong>Información de la cuenta:</strong> Nombre, correo electrónico, número de teléfono</li>
+                <li><strong>Datos de la familia:</strong> Nombres de miembros, personas agregadas</li>
+                <li><strong>Mensajes de WhatsApp:</strong> Todo el historial de conversaciones con el asistente</li>
+                <li><strong>Eventos y tareas:</strong> Todos los eventos, tareas y recordatorios creados</li>
+                <li><strong>Integraciones:</strong> Conexiones con Google Calendar y Microsoft Calendar (los tokens se revocan)</li>
+                <li><strong>Metadatos técnicos:</strong> Identificadores, sesiones, logs asociados</li>
+            </ul>
+
+            <div class="warning-box">
+                <p><strong>⚠️ Advertencia:</strong> La eliminación de datos es permanente e irreversible. No podremos recuperar tus datos después de completar el proceso.</p>
+            </div>
+
+            <h2>Plazo de Eliminación</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <strong>Día 0: Solicitud Recibida</strong>
+                    <p>Recibimos tu solicitud de eliminación de datos</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>Día 1-2: Verificación</strong>
+                    <p>Verificamos tu identidad para proteger tu cuenta</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>Día 3-7: Proceso de Eliminación</strong>
+                    <p>Iniciamos la eliminación de tus datos de todos nuestros sistemas</p>
+                </div>
+                <div class="timeline-item">
+                    <strong>Día 30: Eliminación Completa</strong>
+                    <p>Todos tus datos se eliminan permanentemente, incluyendo copias de seguridad</p>
+                </div>
+            </div>
+
+            <p><strong>Plazo máximo:</strong> 30 días naturales desde la recepción de tu solicitud.</p>
+
+            <h2>Datos que Conservamos (Solo si es Legalmente Requerido)</h2>
+            <p>Por obligaciones legales, podemos conservar temporalmente:</p>
+            <ul>
+                <li><strong>Datos de facturación:</strong> Conservados durante 10 años según la normativa fiscal española</li>
+                <li><strong>Registros de auditoría:</strong> Conservados durante 2 años para cumplimiento legal y resolución de disputas</li>
+            </ul>
+            <p>Estos datos se mantienen de forma segura, cifrados y con acceso restringido únicamente para fines de cumplimiento legal.</p>
+
+            <div class="info-box">
+                <p><strong>ℹ️ Nota:</strong> Los datos conservados por obligación legal se eliminan automáticamente al cumplirse los plazos legales de retención.</p>
+            </div>
+
+            <h2>Alternativa: Cancelar Suscripción sin Eliminar Datos</h2>
+            <p>Si solo deseas cancelar tu suscripción pero conservar tus datos por si decides volver:</p>
+            <ul>
+                <li>Cancela tu suscripción desde tu cuenta</li>
+                <li>Conservaremos tus datos durante 30 días</li>
+                <li>Si no reactivas tu cuenta en 30 días, los datos se eliminarán automáticamente</li>
+            </ul>
+
+            <h2>Derechos RGPD/GDPR</h2>
+            <p>Como usuario en España, tienes los siguientes derechos adicionales:</p>
+            <ul>
+                <li><strong>Derecho de Acceso:</strong> Solicitar una copia de todos tus datos</li>
+                <li><strong>Derecho de Rectificación:</strong> Corregir datos inexactos</li>
+                <li><strong>Derecho de Portabilidad:</strong> Recibir tus datos en formato estructurado (JSON/CSV)</li>
+                <li><strong>Derecho de Oposición:</strong> Oponerte al procesamiento de tus datos</li>
+                <li><strong>Derecho de Supresión:</strong> Eliminar completamente tus datos (esta página)</li>
+            </ul>
+            <p>Para ejercer cualquiera de estos derechos, contacta: <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a></p>
+
+            <h2>¿Qué Pasa con los Datos de Terceros?</h2>
+
+            <h3>Integraciones de Calendario</h3>
+            <p>Cuando eliminas tu cuenta:</p>
+            <ul>
+                <li>Revocamos inmediatamente los tokens de acceso de Google Calendar y Microsoft Calendar</li>
+                <li>No eliminamos eventos de tu calendario personal (tú mantienes el control)</li>
+                <li>Puedes revocar el acceso manualmente desde tu cuenta de Google/Microsoft</li>
+            </ul>
+
+            <h3>WhatsApp</h3>
+            <p>Los mensajes de WhatsApp se procesan a través de la WhatsApp Business API de Meta:</p>
+            <ul>
+                <li>Eliminamos todos los mensajes de nuestros sistemas</li>
+                <li>Meta puede retener metadatos según su propia política de privacidad</li>
+                <li>Tu historial de chat de WhatsApp local permanece en tu dispositivo (puedes eliminarlo manualmente)</li>
+            </ul>
+
+            <h2>Preguntas Frecuentes</h2>
+
+            <h3>¿Cuánto tiempo tarda la eliminación?</h3>
+            <p>El proceso completo tarda hasta 30 días. La mayoría de los datos se eliminan en los primeros 7 días, pero las copias de seguridad pueden tardar hasta 30 días.</p>
+
+            <h3>¿Puedo recuperar mis datos después de eliminarlos?</h3>
+            <p>No. La eliminación es permanente e irreversible. Si cambias de opinión, debes solicitar la eliminación antes de que se complete el proceso (dentro de 7 días).</p>
+
+            <h3>¿Qué pasa con la suscripción activa?</h3>
+            <p>Si tienes una suscripción activa, se cancelará automáticamente sin reembolso por el tiempo restante, excepto si solicitas la eliminación en los primeros 14 días (garantía de satisfacción).</p>
+
+            <h3>¿Afecta a otros miembros de mi familia?</h3>
+            <p>Si eres el propietario de la cuenta familiar, eliminar tu cuenta eliminará todos los datos de todos los miembros. Si eres un miembro regular, solo se eliminarán tus datos personales.</p>
+
+            <h3>¿Recibiré confirmación?</h3>
+            <p>Sí. Te enviaremos un correo electrónico de confirmación cuando:</p>
+            <ul>
+                <li>Recibamos tu solicitud</li>
+                <li>Se complete la verificación</li>
+                <li>Se finalice la eliminación completa</li>
+            </ul>
+
+            <h2>Contacto</h2>
+            <p>Si tienes preguntas sobre la eliminación de datos o necesitas ayuda, contáctanos:</p>
+            
+            <div class="method-box">
+                <strong>Email:</strong> <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a><br>
+                <strong>WhatsApp:</strong> <a href="https://wa.me/34665027071" target="_blank">+34 665 027 071</a><br>
+                <strong>Sitio web:</strong> <a href="https://lafamilyai.com">https://lafamilyai.com</a>
+            </div>
+
+            <p>Estamos comprometidos con tu derecho a la privacidad y a controlar tus datos personales.</p>
+
+            <hr style="margin: 3rem 0; border: none; border-top: 1px solid #e5e7eb;">
+
+            <p style="text-align: center; color: #6b7280; font-size: 0.875rem;">
+                <strong>LaFamilyAI</strong> - Tu privacidad es nuestra prioridad
+            </p>
+        </div>
+    </div>
+</body>
+</html>
