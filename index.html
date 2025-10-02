@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LaFamilyAI - AI-Powered WhatsApp Family Assistant</title>
-    <meta name="description" content="The AI-powered family assistant that works through WhatsApp. Smart family coordination with artificial intelligence.">
+    <title>LaFamilyAI - Asistente Familiar con IA</title>
+    <meta name="description" content="Asistente familiar con inteligencia artificial que funciona a través de WhatsApp. Coordinación inteligente para tu familia.">
     
     <style>
         * {
@@ -24,6 +24,10 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1rem;
+        }
+        
+        .page-hidden {
+            display: none;
         }
         
         /* Header */
@@ -81,6 +85,7 @@
             color: #1f2937;
             text-decoration: none;
             font-size: 1.25rem;
+            cursor: pointer;
         }
         
         .nav-links {
@@ -94,6 +99,7 @@
             font-size: 0.9rem;
             font-weight: 400;
             transition: color 0.3s ease;
+            cursor: pointer;
         }
         
         .nav-links a:hover {
@@ -395,6 +401,116 @@
             transform: rotate(45deg);
         }
         
+        /* Legal Pages */
+        .legal-page {
+            background: white;
+            min-height: 100vh;
+        }
+        
+        .legal-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .legal-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+        
+        .legal-header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .legal-header .updated {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+        
+        .legal-section {
+            margin-bottom: 3rem;
+        }
+        
+        .legal-section h2 {
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .legal-section h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        
+        .legal-section p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .legal-section ul, .legal-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: #4b5563;
+        }
+        
+        .legal-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+        
+        .legal-section strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ec4899;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateX(-4px);
+        }
+        
+        .contact-box {
+            background: #fdf2f8;
+            border: 1px solid #fce7f3;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .contact-box strong {
+            display: block;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-box a {
+            color: #ec4899;
+            text-decoration: none;
+        }
+        
+        .contact-box a:hover {
+            text-decoration: underline;
+        }
+        
         /* Footer */
         footer {
             border-top: 1px solid #f3f4f6;
@@ -416,12 +532,14 @@
             display: flex;
             align-items: center;
             gap: 2rem;
+            flex-wrap: wrap;
         }
         
         .footer-links a {
             color: #6b7280;
             text-decoration: none;
             transition: color 0.3s ease;
+            cursor: pointer;
         }
         
         .footer-links a:hover {
@@ -519,7 +637,7 @@
             }
         }
         
-        /* Icons (using emojis) */
+        /* Icons */
         .icon {
             display: inline-block;
         }
@@ -532,282 +650,223 @@
         .icon-ai::before { content: "🤖"; }
         .icon-family::before { content: "👨‍👩‍👧‍👦"; }
         .icon-smart::before { content: "🧠"; }
+        .icon-arrow-left::before { content: "←"; }
     </style>
 </head>
 <body>
-    <div class="hero-bg">
-        <!-- Header -->
-        <header>
-            <div class="container">
-                <nav>
-                    <a href="#" class="logo">LaFamilyAI</a>
-                    <div class="nav-links">
-                        <a href="#pricing">Pricing</a>
-                        <a href="#faq">FAQ</a>
-                        <a href="#contact">Contact</a>
-                    </div>
-                    <a href="mailto:cb@lafamilyai.com" class="btn btn-primary">Join waitlist</a>
-                </nav>
-            </div>
-        </header>
-
-        <!-- Hero -->
-        <section class="hero">
-            <div class="container">
-                <h1>Family life, simplified with <span class="highlight">AI</span></h1>
-                <p class="subtitle">Smart family coordination powered by artificial intelligence. One WhatsApp chat for calendars, tasks, and reminders. No new apps needed.</p>
-                
-                <div class="hero-buttons">
-                    <a href="https://wa.me/34665027071" target="_blank" class="btn btn-primary btn-lg">
-                        <span class="icon icon-message"></span> Start with WhatsApp
-                    </a>
+    <!-- Home Page -->
+    <div id="home-page">
+        <div class="hero-bg">
+            <header>
+                <div class="container">
+                    <nav>
+                        <a onclick="showPage('home')" class="logo">LaFamilyAI</a>
+                        <div class="nav-links">
+                            <a onclick="showPage('home', 'pricing')">Precio</a>
+                            <a onclick="showPage('home', 'faq')">FAQ</a>
+                            <a onclick="showPage('home', 'contact')">Contacto</a>
+                        </div>
+                        <a href="mailto:cb@lafamilyai.com" class="btn btn-primary">Únete a la lista de espera</a>
+                    </nav>
                 </div>
+            </header>
 
-                <!-- Trust row -->
-                <div class="trust-row">
-                    <div class="trust-item">
-                        <span class="icon icon-ai"></span> AI-Powered
+            <section class="hero">
+                <div class="container">
+                    <h1>La vida familiar simplificada con <span class="highlight">IA</span></h1>
+                    <p class="subtitle">Coordinación familiar inteligente con inteligencia artificial. Un chat de WhatsApp para calendarios, tareas y recordatorios. No necesitas instalar apps nuevas.</p>
+                    
+                    <div class="hero-buttons">
+                        <a href="https://wa.me/34665027071" target="_blank" class="btn btn-primary btn-lg">
+                            <span class="icon icon-message"></span> Empieza con WhatsApp
+                        </a>
                     </div>
-                    <div class="trust-item">
-                        <span class="icon icon-shield"></span> Privacy-first
+
+                    <div class="trust-row">
+                        <div class="trust-item">
+                            <span class="icon icon-ai"></span> Potenciado por IA
+                        </div>
+                        <div class="trust-item">
+                            <span class="icon icon-shield"></span> Privacidad primero
+                        </div>
+                        <div class="trust-item">
+                            <span class="icon icon-calendar"></span> Sincronización con Google Calendar
+                        </div>
+                        <div class="trust-item">
+                            <span class="icon icon-bell"></span> Recordatorios inteligentes
+                        </div>
                     </div>
-                    <div class="trust-item">
-                        <span class="icon icon-calendar"></span> Google Calendar sync
+                </div>
+            </section>
+        </div>
+
+        <section class="section-lg section-white">
+            <div class="container">
+                <h2 class="section-title">Cómo funciona nuestra IA</h2>
+                <p class="section-subtitle">Inteligencia artificial avanzada que entiende las necesidades de tu familia</p>
+
+                <div class="grid grid-3">
+                    <div class="card">
+                        <div class="card-icon">
+                            <span class="icon icon-message"></span>
+                        </div>
+                        <h3>Habla naturalmente</h3>
+                        <p>Envía un mensaje de WhatsApp como "Dentista para Tomás lunes 9am". Nuestra IA entiende lenguaje natural y el contexto familiar.</p>
                     </div>
-                    <div class="trust-item">
-                        <span class="icon icon-bell"></span> Smart reminders
+                    <div class="card">
+                        <div class="card-icon">
+                            <span class="icon icon-smart"></span>
+                        </div>
+                        <h3>La IA organiza todo</h3>
+                        <p>Algoritmos avanzados crean eventos automáticamente, asignan tareas, detectan conflictos y sincronizan con los calendarios familiares.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <span class="icon icon-bell"></span>
+                        </div>
+                        <h3>Notificaciones inteligentes</h3>
+                        <p>Recordatorios potenciados por IA y resúmenes diarios personalizados mantienen informado a cada miembro de la familia.</p>
                     </div>
                 </div>
             </div>
         </section>
+
+        <section class="section section-gray">
+            <div class="container">
+                <div class="grid grid-3">
+                    <div class="feature-card">
+                        <span class="icon icon-check feature-icon"></span>
+                        <span>Coordinación familiar con IA</span>
+                    </div>
+                    <div class="feature-card">
+                        <span class="icon icon-check feature-icon"></span>
+                        <span>Asignación inteligente de tareas</span>
+                    </div>
+                    <div class="feature-card">
+                        <span class="icon icon-check feature-icon"></span>
+                        <span>Detección inteligente de conflictos</span>
+                    </div>
+                    <div class="feature-card">
+                        <span class="icon icon-check feature-icon"></span>
+                        <span>Insights personalizados con IA</span>
+                    </div>
+                    <div class="feature-card">
+                        <span class="icon icon-check feature-icon"></span>
+                        <span>IA multiidioma</span>
+                    </div>
+                    <div class="feature-card">
+                        <span class="icon icon-check feature-icon"></span>
+                        <span>Funciona desde cualquier teléfono</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="section-lg section-white">
+            <div class="container">
+                <h2 class="section-title">Precio simple</h2>
+                <p class="section-subtitle">Coordinación familiar con IA a un precio asequible</p>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div>
+                            <div class="price">€7.99</div>
+                            <div class="price-period">por familia / mes</div>
+                        </div>
+                        <div class="early-access">Precio de acceso anticipado</div>
+                    </div>
+                    
+                    <ul class="features-list">
+                        <li>
+                            <span class="icon icon-check check-icon"></span>
+                            <span>Hasta 6 miembros de la familia</span>
+                        </li>
+                        <li>
+                            <span class="icon icon-check check-icon"></span>
+                            <span>Interfaz de WhatsApp con IA</span>
+                        </li>
+                        <li>
+                            <span class="icon icon-check check-icon"></span>
+                            <span>Sincronización inteligente de calendarios</span>
+                        </li>
+                        <li>
+                            <span class="icon icon-check check-icon"></span>
+                            <span>Gestión inteligente de tareas</span>
+                        </li>
+                        <li>
+                            <span class="icon icon-check check-icon"></span>
+                            <span>Soporte prioritario de IA durante la beta</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="mailto:cb@lafamilyai.com" class="btn btn-primary btn-lg btn-full">Únete a la lista de espera</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="section-lg section-gray">
+            <div class="container">
+                <h2 class="section-title">Preguntas frecuentes</h2>
+                <div class="grid grid-2">
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            ¿Cómo entiende la IA mis mensajes?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">Nuestra IA avanzada usa procesamiento de lenguaje natural para entender el contexto familiar, nombres, fechas y tareas de tus mensajes casuales de WhatsApp.</div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            ¿Necesito instalar una app?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">No. LaFamilyAI funciona completamente a través de WhatsApp usando interacciones de chat con IA.</div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            ¿Están seguros los datos de mi familia con el procesamiento de IA?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">Sí. Usamos IA que prioriza la privacidad y procesa solo la información necesaria, cifrando todos los datos familiares. Tus conversaciones permanecen privadas.</div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            ¿Puede la IA manejar múltiples idiomas?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">Sí. Nuestra IA está entrenada para entender y responder en múltiples idiomas, perfecto para familias multilingües.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact">
+            <div class="container">
+                <div class="footer-content">
+                    <p>© 2025 LaFamilyAI - Coordinación familiar con IA</p>
+                    <div class="footer-links">
+                        <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
+                        <a onclick="showPage('privacy')">Privacidad</a>
+                        <a onclick="showPage('terms')">Términos</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <!-- How it works -->
-    <section class="section-lg section-white">
-        <div class="container">
-            <h2 class="section-title">How our AI works for your family</h2>
-            <p class="section-subtitle">Advanced artificial intelligence that understands your family's needs</p>
-
-            <div class="grid grid-3">
-                <div class="card">
-                    <div class="card-icon">
-                        <span class="icon icon-message"></span>
+    <!-- Privacy Policy Page -->
+    <div id="privacy-page" class="page-hidden legal-page">
+        <header>
+            <div class="container">
+                <nav>
+                    <a onclick="showPage('home')" class="logo">LaFamilyAI</a>
+                    <div class="nav-links">
+                        <a onclick="showPage('home', 'pricing')">Precio</a>
+                        <a onclick="showPage('home', 'faq')">FAQ</a>
+                        <a onclick="showPage('home', 'contact')">Contacto</a>
                     </div>
-                    <h3>Chat naturally</h3>
-                    <p>Send a WhatsApp message like 'Dentist for Tomás Monday 9am'. Our AI understands natural language and family context.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <span class="icon icon-smart"></span>
-                    </div>
-                    <h3>AI organizes everything</h3>
-                    <p>Advanced algorithms automatically create events, assign tasks, detect conflicts, and sync with your family calendars.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <span class="icon icon-bell"></span>
-                    </div>
-                    <h3>Smart notifications</h3>
-                    <p>AI-powered reminders and personalized daily digests keep every family member informed and on track.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features -->
-    <section class="section section-gray">
-        <div class="container">
-            <div class="grid grid-3">
-                <div class="feature-card">
-                    <span class="icon icon-check feature-icon"></span>
-                    <span>AI-powered family coordination</span>
-                </div>
-                <div class="feature-card">
-                    <span class="icon icon-check feature-icon"></span>
-                    <span>Intelligent task assignment</span>
-                </div>
-                <div class="feature-card">
-                    <span class="icon icon-check feature-icon"></span>
-                    <span>Smart conflict detection</span>
-                </div>
-                <div class="feature-card">
-                    <span class="icon icon-check feature-icon"></span>
-                    <span>Personalized AI insights</span>
-                </div>
-                <div class="feature-card">
-                    <span class="icon icon-check feature-icon"></span>
-                    <span>Multi-language AI understanding</span>
-                </div>
-                <div class="feature-card">
-                    <span class="icon icon-check feature-icon"></span>
-                    <span>Works from any phone</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing" class="section-lg section-white">
-        <div class="container">
-            <h2 class="section-title">Simple pricing</h2>
-            <p class="section-subtitle">AI-powered family coordination at an affordable price</p>
-
-            <div class="pricing-card">
-                <div class="pricing-header">
-                    <div>
-                        <div class="price">€7.99</div>
-                        <div class="price-period">per family / month</div>
-                    </div>
-                    <div class="early-access">Early access price</div>
-                </div>
+                    <a href="mailto:cb@lafamilyai.com" class="btn btn-primary">Contacto</a>
                 
-                <ul class="features-list">
-                    <li>
-                        <span class="icon icon-check check-icon"></span>
-                        <span>Up to 6 family members</span>
-                    </li>
-                    <li>
-                        <span class="icon icon-check check-icon"></span>
-                        <span>AI-powered WhatsApp interface</span>
-                    </li>
-                    <li>
-                        <span class="icon icon-check check-icon"></span>
-                        <span>Smart calendar synchronization</span>
-                    </li>
-                    <li>
-                        <span class="icon icon-check check-icon"></span>
-                        <span>Intelligent task management</span>
-                    </li>
-                    <li>
-                        <span class="icon icon-check check-icon"></span>
-                        <span>Priority AI support during beta</span>
-                    </li>
-                </ul>
-                
-                <a href="mailto:cb@lafamilyai.com" class="btn btn-primary btn-lg btn-full">Join the AI waitlist</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="section-lg section-gray">
-        <div class="container">
-            <h2 class="section-title">Frequently asked questions</h2>
-            <div class="grid grid-2">
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
-                        How does the AI understand my messages?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">Our advanced AI uses natural language processing to understand family-specific context, names, dates, and tasks from your casual WhatsApp messages.</div>
-                </div>
-                
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
-                        Do I need to install an app?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">No. LaFamilyAI works entirely through WhatsApp using AI-powered chat interactions.</div>
-                </div>
-                
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
-                        Is my family data safe with AI processing?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">Yes. We use privacy-first AI that processes only necessary information and encrypts all family data. Your conversations remain private.</div>
-                </div>
-                
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">
-                        Can the AI handle multiple languages?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">Yes. Our AI is trained to understand and respond in multiple languages, perfect for multilingual families.</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <p>© 2025 LaFamilyAI - AI-powered family coordination</p>
-                <div class="footer-links">
-                    <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
-                    <a href="#" onclick="showPrivacy()">Privacy</a>
-                    <a href="#" onclick="showTerms()">Terms</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Cookie Consent -->
-    <div class="cookie-consent" id="cookieConsent">
-        <div class="cookie-content">
-            <div class="cookie-text">
-                We use cookies to improve your experience and analyze our AI performance. By continuing to use our site, you agree to our use of cookies.
-            </div>
-            <div class="cookie-buttons">
-                <button class="btn btn-secondary" onclick="rejectCookies()">Reject</button>
-                <button class="btn btn-primary" onclick="acceptCookies()">Accept</button>
-                <button class="btn btn-secondary" onclick="cookieSettings()">Settings</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function toggleFaq(element) {
-            const answer = element.querySelector('.faq-answer');
-            const toggle = element.querySelector('.faq-toggle');
-            
-            if (answer.classList.contains('show')) {
-                answer.classList.remove('show');
-                toggle.classList.remove('rotate');
-            } else {
-                // Close all other FAQs
-                document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('show'));
-                document.querySelectorAll('.faq-toggle').forEach(t => t.classList.remove('rotate'));
-                
-                // Open this FAQ
-                answer.classList.add('show');
-                toggle.classList.add('rotate');
-            }
-        }
-
-        // Cookie consent functionality
-        function showCookieConsent() {
-            const consent = localStorage.getItem('cookieConsent');
-            if (!consent) {
-                document.getElementById('cookieConsent').classList.add('show');
-            }
-        }
-
-        function acceptCookies() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            document.getElementById('cookieConsent').classList.remove('show');
-        }
-
-        function rejectCookies() {
-            localStorage.setItem('cookieConsent', 'rejected');
-            document.getElementById('cookieConsent').classList.remove('show');
-        }
-
-        function cookieSettings() {
-            alert('Cookie settings: You can manage cookies in your browser settings. We only use essential cookies for AI performance analytics.');
-        }
-
-        function showPrivacy() {
-            alert('Privacy Policy: LaFamilyAI is committed to protecting your family\'s privacy. We use AI to process only necessary information and encrypt all data. Full privacy policy coming soon.');
-        }
-
-        function showTerms() {
-            alert('Terms of Service: By using LaFamilyAI, you agree to our AI-powered service terms. Full terms of service coming soon.');
-        }
-
-        // Show cookie consent on load
-        window.addEventListener('load', showCookieConsent);
-    </script>
-</body>
-</html>
