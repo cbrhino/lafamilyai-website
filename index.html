@@ -6,6 +6,10 @@
     <title>LaFamilyAI - Asistente Familiar con IA</title>
     <meta name="description" content="Asistente familiar con inteligencia artificial que funciona a través de WhatsApp. Coordinación inteligente para tu familia.">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    
     <style>
         * {
             margin: 0;
@@ -38,6 +42,13 @@
             backdrop-filter: blur(10px);
             background: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid rgba(236, 72, 153, 0.1);
+        }
+        
+        /* On mobile, header is not sticky to save screen space */
+        @media (max-width: 767px) {
+            header {
+                position: relative;
+            }
         }
         
         .hero-bg {
@@ -318,10 +329,14 @@
         }
         
         .pricing-header {
-            display: flex;
-            align-items: end;
-            justify-content: space-between;
             margin-bottom: 2rem;
+        }
+        
+        .price-container {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
         }
         
         .price {
@@ -331,14 +346,26 @@
             color: #1f2937;
         }
         
-        .price-period {
-            color: #6b7280;
+        .price-original {
+            font-size: 1.5rem;
+            color: #9ca3af;
+            text-decoration: line-through;
         }
         
-        .early-access {
+        .price-period {
+            color: #6b7280;
             font-size: 0.875rem;
-            color: #ec4899;
-            font-weight: 500;
+        }
+        
+        .discount-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
         
         .features-list {
@@ -378,12 +405,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 0.75rem;
         }
         
         .faq-answer {
             color: #6b7280;
             line-height: 1.6;
+            margin-top: 0.75rem;
             display: none;
         }
         
@@ -395,6 +422,7 @@
             color: #9ca3af;
             transition: transform 0.3s ease;
             font-size: 1.25rem;
+            flex-shrink: 0;
         }
         
         .faq-toggle.rotate {
@@ -482,6 +510,7 @@
             font-weight: 500;
             margin-bottom: 2rem;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
         
         .back-button:hover {
@@ -637,6 +666,22 @@
             }
         }
         
+        @media (max-width: 767px) {
+            .before-after-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .step-number {
+                position: relative !important;
+                left: 0 !important;
+                margin-bottom: 1rem;
+            }
+            
+            .step-content {
+                padding-left: 0 !important;
+            }
+        }
+        
         /* Icons */
         .icon {
             display: inline-block;
@@ -651,6 +696,71 @@
         .icon-family::before { content: "👨‍👩‍👧‍👦"; }
         .icon-smart::before { content: "🧠"; }
         .icon-arrow-left::before { content: "←"; }
+        .icon-voice::before { content: "🎤"; }
+        .icon-photo::before { content: "📸"; }
+        
+        /* Floating Mobile CTA */
+        .floating-cta {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            z-index: 50;
+            display: none;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .floating-cta.show {
+            display: block;
+        }
+        
+        .floating-cta .btn {
+            width: 100%;
+            box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.3);
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Hide floating CTA on desktop */
+        @media (min-width: 768px) {
+            .floating-cta {
+                display: none !important;
+            }
+        }
+        
+        /* CTA Section Styles */
+        .cta-section {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            font-weight: 400;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            color: #6b7280;
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
@@ -662,25 +772,29 @@
                     <nav>
                         <a onclick="showPage('home')" class="logo">LaFamilyAI</a>
                         <div class="nav-links">
-                            <a onclick="showPage('home', 'pricing')">Precio</a>
-                            <a onclick="showPage('home', 'faq')">FAQ</a>
-                            <a onclick="showPage('home', 'contact')">Contacto</a>
+                            <a onclick="scrollToSection('pricing')">Precio</a>
+                            <a onclick="scrollToSection('faq')">FAQ</a>
+                            <a onclick="scrollToSection('contact')">Contacto</a>
                         </div>
-                        <a href="mailto:cb@lafamilyai.com" class="btn btn-primary">Únete a la lista de espera</a>
+                        <a href="https://app.lafamilyai.com/en/signup" class="btn btn-primary">Comenzar ahora</a>
                     </nav>
                 </div>
             </header>
 
             <section class="hero">
                 <div class="container">
-                    <h1>La vida familiar simplificada con <span class="highlight">IA</span></h1>
-                    <p class="subtitle">Coordinación familiar inteligente con inteligencia artificial. Un chat de WhatsApp para calendarios, tareas y recordatorios. No necesitas instalar apps nuevas.</p>
+                    <h1>La coordinación familiar que <span class="highlight">funciona de verdad</span></h1>
+                    <p class="subtitle">Porque tu familia ya usa WhatsApp. Nuestra IA convierte tus mensajes en eventos organizados, sincronizados y recordados automáticamente. Sin apps nuevas. Sin cambiar hábitos. Sin olvidar citas importantes.</p>
                     
                     <div class="hero-buttons">
-                        <a href="https://wa.me/34665027071" target="_blank" class="btn btn-primary btn-lg">
-                            <span class="icon icon-message"></span> Empieza con WhatsApp
+                        <a href="https://app.lafamilyai.com/en/signup" class="btn btn-primary btn-lg">
+                            <span class="icon icon-message"></span> Probar gratis 30 días
                         </a>
                     </div>
+                    
+                    <p style="text-align: center; color: #9ca3af; font-size: 0.875rem; margin-top: 1rem;">
+                        ✓ Sin tarjeta de crédito  &nbsp;•&nbsp;  ✓ 2 minutos de configuración  &nbsp;•&nbsp;  ✓ Cancela cuando quieras
+                    </p>
 
                     <div class="trust-row">
                         <div class="trust-item">
@@ -693,40 +807,270 @@
                             <span class="icon icon-calendar"></span> Sincronización con Google Calendar
                         </div>
                         <div class="trust-item">
-                            <span class="icon icon-bell"></span> Recordatorios inteligentes
+                            <span class="icon icon-bell"></span> Configuración en 2 minutos
                         </div>
                     </div>
                 </div>
             </section>
         </div>
 
+        <!-- Value Proposition with Measurable Outcomes -->
+        <section class="section" style="background: linear-gradient(180deg, white 0%, #fafafa 100%); padding: 4rem 0;">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2rem; font-weight: 300; color: #1f2937; margin-bottom: 3rem;">Lo que consigues con LaFamilyAI</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 900px; margin: 0 auto;">
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="font-size: 3rem; font-weight: 600; color: #ec4899; margin-bottom: 0.5rem;">-5h</div>
+                        <p style="color: #6b7280; font-size: 1rem;">Menos tiempo coordinando cada semana</p>
+                    </div>
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="font-size: 3rem; font-weight: 600; color: #ec4899; margin-bottom: 0.5rem;">0</div>
+                        <p style="color: #6b7280; font-size: 1rem;">Citas médicas olvidadas</p>
+                    </div>
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="font-size: 3rem; font-weight: 600; color: #ec4899; margin-bottom: 0.5rem;">100%</div>
+                        <p style="color: #6b7280; font-size: 1rem;">De la familia sincronizada automáticamente</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="section-lg section-white">
             <div class="container">
-                <h2 class="section-title">Cómo funciona nuestra IA</h2>
-                <p class="section-subtitle">Inteligencia artificial avanzada que entiende las necesidades de tu familia</p>
+                <h2 class="section-title">¿Te suena esto?</h2>
+                <p class="section-subtitle">La vida familiar no debería ser tan difícil de coordinar</p>
+
+                <div class="grid grid-3">
+                    <div class="card">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5rem;">😰</span>
+                        </div>
+                        <h3>"¿Olvidé algo importante hoy?"</h3>
+                        <p>Vas en el coche y de repente: "¿Era hoy la reunión del cole? ¿Quién recoge a los niños?" La información está perdida entre 200 mensajes de WhatsApp del grupo de padres.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5rem;">😤</span>
+                        </div>
+                        <h3>"Pensaba que tú lo habías apuntado"</h3>
+                        <p>Tu pareja y tú tenéis citas en el mismo horario. Nadie puede recoger a los niños. Otra vez. Porque la información está en la cabeza de uno de los dos, no en un sitio compartido.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">
+                            <span style="font-size: 1.5rem;">🤯</span>
+                        </div>
+                        <h3>"No tengo tiempo para otra app"</h3>
+                        <p>Ya probaste Cozi, Google Family, Trello. Pero nadie las usa. Tu familia vive en WhatsApp y ahí seguirá. Necesitas algo que funcione donde ya están.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem; padding: 2.5rem; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 1rem; border-left: 4px solid #f59e0b;">
+                    <p style="font-size: 1.25rem; color: #78350f; font-weight: 600; margin-bottom: 0.75rem;">El problema real no es la desorganización</p>
+                    <p style="color: #92400e; line-height: 1.8; max-width: 42rem; margin: 0 auto;">Es que todas las soluciones te piden que <strong>cambies cómo funciona tu familia</strong>. Y eso nunca funciona. LaFamilyAI trabaja como ya trabajas tú: en WhatsApp, con mensajes normales, sin formalismos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA after problem section -->
+        <section class="section" style="background: white;">
+            <div class="container">
+                <!-- Before/After Comparison -->
+                <div style="max-width: 900px; margin: 0 auto 4rem;">
+                    <h2 style="text-align: center; font-size: 2rem; font-weight: 300; color: #1f2937; margin-bottom: 3rem;">Antes vs. Después de LaFamilyAI</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;" class="before-after-grid">
+                        <!-- Before -->
+                        <div style="background: #fef2f2; border: 2px solid #fecaca; border-radius: 1rem; padding: 2rem;">
+                            <div style="text-align: center; margin-bottom: 1.5rem;">
+                                <span style="font-size: 2rem;">😰</span>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: #991b1b; margin-top: 0.5rem;">Antes</h3>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0; color: #7f1d1d;">
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #fecaca;">❌ Circulares perdidas en WhatsApp</li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #fecaca;">❌ "¿Quién recoge hoy a los niños?"</li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #fecaca;">❌ Dobles reservas y conflictos</li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #fecaca;">❌ Carga mental constante</li>
+                                <li style="padding: 0.75rem 0;">❌ Apps que nadie usa</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- After -->
+                        <div style="background: #f0fdf4; border: 2px solid #86efac; border-radius: 1rem; padding: 2rem;">
+                            <div style="text-align: center; margin-bottom: 1.5rem;">
+                                <span style="font-size: 2rem;">😌</span>
+                                <h3 style="font-size: 1.25rem; font-weight: 600; color: #166534; margin-top: 0.5rem;">Después</h3>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0; color: #14532d;">
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #86efac;">✅ Todo en tu calendario automáticamente</li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #86efac;">✅ Todos saben qué toca hoy</li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #86efac;">✅ Avisos antes de conflictos</li>
+                                <li style="padding: 0.75rem 0; border-bottom: 1px solid #86efac;">✅ La IA recuerda por ti</li>
+                                <li style="padding: 0.75rem 0;">✅ Sigue usando WhatsApp</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <h2>Prueba LaFamilyAI sin riesgo durante 30 días</h2>
+                    <p>Sin tarjeta de crédito. Si no te ahorra tiempo, cancelas. Simple.</p>
+                    <a href="https://app.lafamilyai.com/en/signup" class="btn btn-primary btn-lg">
+                        Empezar prueba gratuita
+                    </a>
+                    <p style="color: #9ca3af; font-size: 0.875rem; margin-top: 1rem;">Configuración: 2 minutos • Primera familia: 4 miembros incluidos • Soporte: respuesta en 24h</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-lg" style="background: #f9fafb;">
+            <div class="container">
+                <h2 class="section-title">Cómo funciona en 3 pasos</h2>
+                <p class="section-subtitle">De mensaje casual a calendario organizado en segundos</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; max-width: 1000px; margin: 0 auto;">
+                    <div style="position: relative; padding-left: 4rem;">
+                        <div style="position: absolute; left: 0; top: 0; width: 3rem; height: 3rem; background: linear-gradient(135deg, #ec4899, #db2777); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 600;">1</div>
+                        <h3 style="font-size: 1.25rem; font-weight: 500; color: #1f2937; margin-bottom: 0.75rem;">Escribe en WhatsApp</h3>
+                        <p style="color: #6b7280; line-height: 1.6;">Envía cualquier mensaje: "Pediatra María martes 10am" o una foto de la circular del cole. Como siempre lo haces.</p>
+                        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem; margin-top: 1rem; font-family: monospace; font-size: 0.875rem; color: #374151;">
+                            💬 "Dentista Tomás lunes 9am"
+                        </div>
+                    </div>
+                    
+                    <div style="position: relative; padding-left: 4rem;">
+                        <div style="position: absolute; left: 0; top: 0; width: 3rem; height: 3rem; background: linear-gradient(135deg, #ec4899, #db2777); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 600;">2</div>
+                        <h3 style="font-size: 1.25rem; font-weight: 500; color: #1f2937; margin-bottom: 0.75rem;">La IA lo procesa</h3>
+                        <p style="color: #6b7280; line-height: 1.6;">Nuestra IA entiende el contexto, extrae fecha, hora y persona. Detecta conflictos con otros eventos ya programados.</p>
+                        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem; margin-top: 1rem; font-size: 0.875rem; color: #374151;">
+                            ✅ Evento: Dentista<br>
+                            📅 Lunes 11/11 - 09:00<br>
+                            👤 Tomás<br>
+                            ⚠️ Sin conflictos
+                        </div>
+                    </div>
+                    
+                    <div style="position: relative; padding-left: 4rem;">
+                        <div style="position: absolute; left: 0; top: 0; width: 3rem; height: 3rem; background: linear-gradient(135deg, #ec4899, #db2777); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 600;">3</div>
+                        <h3 style="font-size: 1.25rem; font-weight: 500; color: #1f2937; margin-bottom: 0.75rem;">Todos sincronizados</h3>
+                        <p style="color: #6b7280; line-height: 1.6;">El evento aparece en Google Calendar de toda la familia. Recibes confirmación y recordatorios automáticos antes del evento.</p>
+                        <div style="background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem; margin-top: 1rem; font-size: 0.875rem; color: #374151;">
+                            📧 Añadido a calendario<br>
+                            🔔 Recordatorio: 1h antes<br>
+                            👨‍👩‍👦 Visible para: Ana, Carlos
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-lg" style="background: #f9fafb;">
+            <div class="container">
+                <h2 class="section-title">Cómo LaFamilyAI resuelve esto</h2>
+                <p class="section-subtitle">La coordinación familiar debería ser invisible, automática y sin esfuerzo</p>
 
                 <div class="grid grid-3">
                     <div class="card">
                         <div class="card-icon">
                             <span class="icon icon-message"></span>
                         </div>
-                        <h3>Habla naturalmente</h3>
-                        <p>Envía un mensaje de WhatsApp como "Dentista para Tomás lunes 9am". Nuestra IA entiende lenguaje natural y el contexto familiar.</p>
+                        <h3>Usa WhatsApp como siempre</h3>
+                        <p>Envía "Dentista Tomás lunes 9am" o una foto de la circular. Sin formato especial, sin comandos raros. La IA entiende español natural y extrae fechas, horas y personas automáticamente.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon">
-                            <span class="icon icon-smart"></span>
+                            <span class="icon icon-calendar"></span>
                         </div>
-                        <h3>La IA organiza todo</h3>
-                        <p>Algoritmos avanzados crean eventos automáticamente, asignan tareas, detectan conflictos y sincronizan con los calendarios familiares.</p>
+                        <h3>Todo se sincroniza solo</h3>
+                        <p>El evento aparece en Google Calendar de ambos padres al instante. La IA revisa si hay conflictos ("Ana ya tiene algo a esa hora") antes de confirmar. Cero trabajo manual.</p>
                     </div>
                     <div class="card">
                         <div class="card-icon">
                             <span class="icon icon-bell"></span>
                         </div>
-                        <h3>Notificaciones inteligentes</h3>
-                        <p>Recordatorios potenciados por IA y resúmenes diarios personalizados mantienen informado a cada miembro de la familia.</p>
+                        <h3>Nadie olvida nada</h3>
+                        <p>Email diario personalizado cada mañana: "Hoy Carlos recoge a las 16:30, Ana lleva a ballet a las 17:00". Recordatorios antes de cada evento. Tu familia siempre sabe qué toca.</p>
                     </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem; padding: 2.5rem; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 1rem; border-left: 4px solid #10b981;">
+                    <p style="font-size: 1.375rem; color: #065f46; font-weight: 600; margin-bottom: 1rem;">El resultado: 5 horas menos de coordinación cada semana</p>
+                    <p style="color: #047857; line-height: 1.8; max-width: 48rem; margin: 0 auto; font-size: 1.0625rem;">Sin reuniones familiares para "poneros al día". Sin mensajes de "¿qué toca hoy?". Sin discusiones sobre quién olvidó qué. Solo una familia que funciona sin fricción porque la tecnología hace el trabajo pesado por vosotros.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-lg section-white">
+            <div class="container">
+                <h2 class="section-title">Escenarios reales</h2>
+                <p class="section-subtitle">Así es como LaFamilyAI trabaja para tu familia cada día</p>
+
+                <div class="grid grid-2">
+                    <div style="background: white; border: 1px solid #f3f4f6; border-radius: 1rem; padding: 2rem;">
+                        <h3 style="color: #ec4899; font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">📸 Circular del colegio (17:45, martes)</h3>
+                        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1rem;">Recibes una foto borrosa en el grupo de WhatsApp: "Excursión museo viernes 15, 9:30h, traer bocadillo y 5€".</p>
+                        <p style="color: #1f2937; font-weight: 500; margin-bottom: 0.75rem;">LaFamilyAI automáticamente:</p>
+                        <ul style="color: #4b5563; line-height: 1.8; margin-left: 1.25rem;">
+                            <li>Lee la imagen y extrae: fecha, hora, qué llevar</li>
+                            <li>Crea "Excursión museo - Tomás" en vuestros calendarios</li>
+                            <li>Añade tarea: "Preparar bocadillo y 5€" para el jueves noche</li>
+                            <li>Envía recordatorio el jueves: "Mañana excursión, ¿ya tienes bocadillo?"</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: white; border: 1px solid #f3f4f6; border-radius: 1rem; padding: 2rem;">
+                        <h3 style="color: #ec4899; font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">🎤 Conduciendo hacia casa (18:20, miércoles)</h3>
+                        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1rem;">Carlos graba audio mientras conduce: "Pediatra de María, martes que viene a las once".</p>
+                        <p style="color: #1f2937; font-weight: 500; margin-bottom: 0.75rem;">LaFamilyAI automáticamente:</p>
+                        <ul style="color: #4b5563; line-height: 1.8; margin-left: 1.25rem;">
+                            <li>Transcribe el audio y detecta: pediatra, María, martes 11:00</li>
+                            <li>Revisa calendarios: Carlos está libre, Ana tiene reunión</li>
+                            <li>Pregunta: "¿Confirmo pediatra para Carlos? Ana ocupada a esa hora"</li>
+                            <li>Tras confirmar, añade a calendario y envía recordatorio 1h antes</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: white; border: 1px solid #f3f4f6; border-radius: 1rem; padding: 2rem;">
+                        <h3 style="color: #ec4899; font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">⚡ Planificando el fin de semana (20:00, viernes)</h3>
+                        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1rem;">Ana escribe: "Cumple de Lucía, sábado 5 de la tarde en el parque".</p>
+                        <p style="color: #1f2937; font-weight: 500; margin-bottom: 0.75rem;">LaFamilyAI automáticamente:</p>
+                        <ul style="color: #4b5563; line-height: 1.8; margin-left: 1.25rem;">
+                            <li>Detecta: Carlos tiene fútbol sábado 17:00-19:00 (¡conflicto!)</li>
+                            <li>Avisa: "Carlos tiene fútbol de 17:00-19:00. ¿Qué hacemos?"</li>
+                            <li>Ana responde: "Cancela el fútbol"</li>
+                            <li>Actualiza calendario, añade cumpleaños, pregunta: "¿Comprar regalo?"</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: white; border: 1px solid #f3f4f6; border-radius: 1rem; padding: 2rem;">
+                        <h3 style="color: #ec4899; font-size: 1.125rem; font-weight: 600; margin-bottom: 1rem;">🌅 Email diario (07:00, cada día)</h3>
+                        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1rem;">Cada mañana, antes del caos, ambos recibís el plan del día.</p>
+                        <p style="color: #1f2937; font-weight: 500; margin-bottom: 0.75rem;">Email personalizado de Carlos:</p>
+                        <ul style="color: #4b5563; line-height: 1.8; margin-left: 1.25rem;">
+                            <li><strong>Hoy jueves 14:</strong> Recoger a Tomás (16:30), llevar a fútbol (17:00)</li>
+                            <li><strong>Pendiente:</strong> Firmar autorización excursión, llevar 5€</li>
+                            <li><strong>Mañana:</strong> Excursión Tomás 9:30 (bocadillo preparado)</li>
+                            <li><strong>Próximamente:</strong> Cumpleaños abuela (domingo), pediatra María (martes)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: #f0f9ff; border-radius: 1rem; border-left: 4px solid #0284c7;">
+                    <p style="color: #0c4a6e; line-height: 1.8; font-size: 1.0625rem;"><strong>¿Ves el patrón?</strong> Tú vives tu vida normal, enviando mensajes casuales. LaFamilyAI trabaja en segundo plano: leyendo, organizando, detectando problemas, recordando. <strong>La coordinación familiar se vuelve invisible.</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA after use cases -->
+        <section class="section" style="background: white;">
+            <div class="container">
+                <div class="cta-section">
+                    <h2>Únete a las familias que ya coordinan sin estrés</h2>
+                    <p>Empieza hoy. En 2 minutos tu familia estará sincronizada.</p>
+                    <a href="https://app.lafamilyai.com/en/signup" class="btn btn-primary btn-lg">
+                        Crear mi cuenta gratis
+                    </a>
+                    <p style="color: #9ca3af; font-size: 0.875rem; margin-top: 1rem;">30 días gratis • Sin tarjeta • Exporta tus datos cuando quieras</p>
                 </div>
             </div>
         </section>
@@ -748,7 +1092,7 @@
                     </div>
                     <div class="feature-card">
                         <span class="icon icon-check feature-icon"></span>
-                        <span>Insights personalizados con IA</span>
+                        <span>Mensajes de voz y fotos</span>
                     </div>
                     <div class="feature-card">
                         <span class="icon icon-check feature-icon"></span>
@@ -769,17 +1113,18 @@
 
                 <div class="pricing-card">
                     <div class="pricing-header">
-                        <div>
-                            <div class="price">€7.99</div>
-                            <div class="price-period">por familia / mes</div>
+                        <div class="discount-badge">50% de descuento - Lanzamiento</div>
+                        <div class="price-container">
+                            <div class="price">€7.50</div>
+                            <div class="price-original">€15</div>
                         </div>
-                        <div class="early-access">Precio de acceso anticipado</div>
+                        <div class="price-period">por familia / mes</div>
                     </div>
                     
                     <ul class="features-list">
                         <li>
                             <span class="icon icon-check check-icon"></span>
-                            <span>Hasta 6 miembros de la familia</span>
+                            <span>Hasta 4 miembros de la familia</span>
                         </li>
                         <li>
                             <span class="icon icon-check check-icon"></span>
@@ -795,11 +1140,16 @@
                         </li>
                         <li>
                             <span class="icon icon-check check-icon"></span>
-                            <span>Soporte prioritario de IA durante la beta</span>
+                            <span>Mensajes de voz y reconocimiento de fotos</span>
+                        </li>
+                        <li>
+                            <span class="icon icon-check check-icon"></span>
+                            <span>Soporte prioritario</span>
                         </li>
                     </ul>
                     
-                    <a href="mailto:cb@lafamilyai.com" class="btn btn-primary btn-lg btn-full">Únete a la lista de espera</a>
+                    <a href="https://app.lafamilyai.com/en/signup" class="btn btn-primary btn-lg btn-full">Empezar prueba gratuita</a>
+                    <p style="text-align: center; color: #9ca3af; font-size: 0.875rem; margin-top: 0.75rem;">30 días gratis • Sin tarjeta de crédito • Cancela cuando quieras</p>
                 </div>
             </div>
         </section>
@@ -807,37 +1157,70 @@
         <section id="faq" class="section-lg section-gray">
             <div class="container">
                 <h2 class="section-title">Preguntas frecuentes</h2>
+                <p class="section-subtitle">Todo lo que necesitas saber antes de empezar</p>
                 <div class="grid grid-2">
                     <div class="faq-item" onclick="toggleFaq(this)">
                         <div class="faq-question">
-                            ¿Cómo entiende la IA mis mensajes?
+                            ¿Cómo empiezo a usar LaFamilyAI?
                             <span class="faq-toggle">+</span>
                         </div>
-                        <div class="faq-answer">Nuestra IA avanzada usa procesamiento de lenguaje natural para entender el contexto familiar, nombres, fechas y tareas de tus mensajes casuales de WhatsApp.</div>
+                        <div class="faq-answer">Tres pasos: (1) Crea tu cuenta con email, (2) Conecta tu Google Calendar (un clic, OAuth seguro), (3) Añade nuestro número de WhatsApp y envía tu primer mensaje. El proceso completo toma menos de 2 minutos. Recibirás una guía paso a paso por email al registrarte.</div>
                     </div>
                     
                     <div class="faq-item" onclick="toggleFaq(this)">
                         <div class="faq-question">
-                            ¿Necesito instalar una app?
+                            ¿Realmente funciona con mensajes normales?
                             <span class="faq-toggle">+</span>
                         </div>
-                        <div class="faq-answer">No. LaFamilyAI funciona completamente a través de WhatsApp usando interacciones de chat con IA.</div>
+                        <div class="faq-answer">Sí. No necesitas formato especial ni comandos. "Dentista Tomás lunes 9" funciona igual que "Tengo que llevar a Tomás al dentista el lunes a las 9 de la mañana". La IA entiende español natural, extrae lo importante y te pide confirmación antes de crear nada. Si algo no está claro, te pregunta.</div>
                     </div>
                     
                     <div class="faq-item" onclick="toggleFaq(this)">
                         <div class="faq-question">
-                            ¿Están seguros los datos de mi familia con el procesamiento de IA?
+                            ¿Qué pasa si la IA se equivoca?
                             <span class="faq-toggle">+</span>
                         </div>
-                        <div class="faq-answer">Sí. Usamos IA que prioriza la privacidad y procesa solo la información necesaria, cifrando todos los datos familiares. Tus conversaciones permanecen privadas.</div>
+                        <div class="faq-answer">La IA siempre te muestra lo que entendió ANTES de crear el evento. Respondes "sí" para confirmar o corriges directamente ("no, era el martes"). También puedes editar cualquier evento desde Google Calendar. Los errores son raros porque la IA pide aclaración cuando no está segura.</div>
                     </div>
                     
                     <div class="faq-item" onclick="toggleFaq(this)">
                         <div class="faq-question">
-                            ¿Puede la IA manejar múltiples idiomas?
+                            ¿Es seguro? ¿Quién ve nuestros mensajes?
                             <span class="faq-toggle">+</span>
                         </div>
-                        <div class="faq-answer">Sí. Nuestra IA está entrenada para entender y responder en múltiples idiomas, perfecto para familias multilingües.</div>
+                        <div class="faq-answer">Tus mensajes se procesan de forma cifrada y solo tu familia tiene acceso. Usamos los mismos estándares de seguridad que la banca online. Los mensajes se procesan solo para extraer eventos/tareas y se eliminan después. No vendemos datos ni entrenamos modelos públicos con tu información. Cumplimos con GDPR. Puedes exportar o eliminar todos tus datos cuando quieras.</div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            ¿Funciona con mi calendario actual?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">Sí, sincronización bidireccional con Google Calendar. Si ya tienes eventos, LaFamilyAI los lee para detectar conflictos. Los eventos que crees en LaFamilyAI aparecen en Google Calendar al instante. Si editas algo en Google Calendar, LaFamilyAI lo ve. Funciona con cualquier calendario que sincronices con Google (iOS, Android, web).</div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            ¿Puedo enviar mensajes de voz y fotos?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">Absolutamente. Mensajes de voz se transcriben automáticamente (útil cuando conduces). Fotos con texto (circulares del cole, carteles de eventos) se leen con OCR. Funciona incluso con fotos borrosas o mal iluminadas. El procesamiento toma 2-5 segundos.</div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            ¿Y si mi pareja no quiere otra herramienta?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">Ese es precisamente el punto. Tu pareja no tiene que "usar otra herramienta". Los eventos aparecen automáticamente en su Google Calendar (que ya usa). Si quiere interactuar con LaFamilyAI, solo añade el número de WhatsApp. Si no, simplemente ve todo en su calendario. Cero fricción.</div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFaq(this)">
+                        <div class="faq-question">
+                            ¿Puedo cancelar cuando quiera?
+                            <span class="faq-toggle">+</span>
+                        </div>
+                        <div class="faq-answer">Sí, cancelas con un clic desde tu cuenta. Sin preguntas, sin retención. Si cancelas, tus datos se mantienen 30 días por si cambias de opinión, luego se eliminan permanentemente. Puedes exportar todo antes de cancelar. El 30% de usuarios que cancelan vuelven en el primer mes.</div>
                     </div>
                 </div>
             </div>
@@ -849,9 +1232,9 @@
                     <p>© 2025 LaFamilyAI - Coordinación familiar con IA</p>
                     <div class="footer-links">
                         <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
-                        <a href="privacy-policy.html">Privacidad</a>
-                        <a href="terms-of-service.html">Términos</a>
-                        <a href="data-deletion.html">Eliminar Datos</a>
+                        <a onclick="showPage('privacy')">Privacidad</a>
+                        <a onclick="showPage('terms')">Términos</a>
+                        <a onclick="showPage('deletion')">Eliminar Datos</a>
                     </div>
                 </div>
             </div>
@@ -865,9 +1248,450 @@
                 <nav>
                     <a onclick="showPage('home')" class="logo">LaFamilyAI</a>
                     <div class="nav-links">
-                        <a onclick="showPage('home', 'pricing')">Precio</a>
-                        <a onclick="showPage('home', 'faq')">FAQ</a>
-                        <a onclick="showPage('home', 'contact')">Contacto</a>
+                        <a onclick="showPage('home'); setTimeout(() => scrollToSection('pricing'), 100)">Precio</a>
+                        <a onclick="showPage('home'); setTimeout(() => scrollToSection('faq'), 100)">FAQ</a>
+                        <a onclick="showPage('home'); setTimeout(() => scrollToSection('contact'), 100)">Contacto</a>
                     </div>
-                    <a href="mailto:cb@lafamilyai.com" class="btn btn-primary">Contacto</a>
+                    <a href="https://app.lafamilyai.com/en/signup" class="btn btn-primary">Comenzar ahora</a>
+                </nav>
+            </div>
+        </header>
+        
+        <div class="legal-content">
+            <a onclick="showPage('home')" class="back-button">
+                <span class="icon icon-arrow-left"></span> Volver al inicio
+            </a>
+            
+            <div class="legal-header">
+                <h1>Política de Privacidad</h1>
+                <p class="updated">Última actualización: Noviembre 2025</p>
+            </div>
+            
+            <div class="legal-section">
+                <h2>1. Información que Recopilamos</h2>
+                <p>LaFamilyAI recopila la siguiente información para proporcionar nuestro servicio:</p>
+                <ul>
+                    <li><strong>Información de cuenta:</strong> Nombre, correo electrónico, número de teléfono</li>
+                    <li><strong>Información familiar:</strong> Nombres de miembros de la familia, relaciones</li>
+                    <li><strong>Contenido de mensajes:</strong> Mensajes de WhatsApp que envías a nuestro asistente de IA</li>
+                    <li><strong>Datos de calendario:</strong> Eventos, recordatorios y tareas creados a través de nuestro servicio</li>
+                    <li><strong>Datos de uso:</strong> Cómo interactúas con nuestro servicio</li>
+                </ul>
                 
+                <h2>2. Cómo Usamos Tu Información</h2>
+                <p>Utilizamos tu información para:</p>
+                <ul>
+                    <li>Proporcionar y mejorar nuestro servicio de asistente familiar con IA</li>
+                    <li>Procesar tus mensajes y crear eventos de calendario</li>
+                    <li>Sincronizar con servicios de calendario de terceros (Google Calendar)</li>
+                    <li>Enviar notificaciones y recordatorios</li>
+                    <li>Comunicarnos contigo sobre tu cuenta</li>
+                    <li>Mejorar nuestros algoritmos de IA</li>
+                </ul>
+                
+                <h2>3. Procesamiento de IA y Privacidad</h2>
+                <p>Nuestro servicio utiliza procesamiento de inteligencia artificial para entender tus mensajes:</p>
+                <ul>
+                    <li>Tus mensajes son procesados por modelos de IA para extraer información relevante</li>
+                    <li>Solo procesamos la información necesaria para proporcionar el servicio</li>
+                    <li>No utilizamos tus datos para entrenar modelos públicos de IA</li>
+                    <li>Todos los datos se cifran en tránsito y en reposo</li>
+                </ul>
+                
+                <h2>4. Compartir Datos</h2>
+                <p>No vendemos tu información personal. Podemos compartir datos con:</p>
+                <ul>
+                    <li><strong>Proveedores de servicios:</strong> Hosting, procesamiento de IA (OpenAI), servicios de calendario</li>
+                    <li><strong>Requisitos legales:</strong> Cuando lo exija la ley</li>
+                    <li><strong>Transferencias comerciales:</strong> En caso de fusión o adquisición</li>
+                </ul>
+                
+                <h2>5. Tus Derechos</h2>
+                <p>Bajo GDPR y otras leyes de privacidad, tienes derecho a:</p>
+                <ul>
+                    <li>Acceder a tus datos personales</li>
+                    <li>Corregir información inexacta</li>
+                    <li>Solicitar la eliminación de tus datos</li>
+                    <li>Exportar tus datos</li>
+                    <li>Oponerte al procesamiento</li>
+                    <li>Retirar el consentimiento</li>
+                </ul>
+                
+                <div class="contact-box">
+                    <strong>Para ejercer estos derechos, contáctanos:</strong>
+                    <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
+                </div>
+                
+                <h2>6. Retención de Datos</h2>
+                <p>Conservamos tus datos mientras tu cuenta esté activa. Cuando elimines tu cuenta, eliminaremos tus datos personales dentro de 30 días, excepto cuando la ley nos obligue a conservarlos.</p>
+                
+                <h2>7. Seguridad</h2>
+                <p>Implementamos medidas de seguridad técnicas y organizativas para proteger tus datos, incluyendo:</p>
+                <ul>
+                    <li>Cifrado en tránsito (TLS) y en reposo</li>
+                    <li>Control de acceso y autenticación</li>
+                    <li>Auditorías regulares de seguridad</li>
+                    <li>Aislamiento de datos multi-tenant</li>
+                </ul>
+                
+                <h2>8. Cambios en Esta Política</h2>
+                <p>Podemos actualizar esta política ocasionalmente. Te notificaremos sobre cambios significativos por correo electrónico o a través de nuestro servicio.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <p>© 2025 LaFamilyAI - Coordinación familiar con IA</p>
+                    <div class="footer-links">
+                        <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
+                        <a onclick="showPage('privacy')">Privacidad</a>
+                        <a onclick="showPage('terms')">Términos</a>
+                        <a onclick="showPage('deletion')">Eliminar Datos</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Terms of Service Page -->
+    <div id="terms-page" class="page-hidden legal-page">
+        <header>
+            <div class="container">
+                <nav>
+                    <a onclick="showPage('home')" class="logo">LaFamilyAI</a>
+                    <div class="nav-links">
+                        <a onclick="showPage('home'); setTimeout(() => scrollToSection('pricing'), 100)">Precio</a>
+                        <a onclick="showPage('home'); setTimeout(() => scrollToSection('faq'), 100)">FAQ</a>
+                        <a onclick="showPage('home'); setTimeout(() => scrollToSection('contact'), 100)">Contacto</a>
+                    </div>
+                    <a href="https://app.lafamilyai.com/en/signup" class="btn btn-primary">Comenzar ahora</a>
+                </nav>
+            </div>
+        </header>
+        
+        <div class="legal-content">
+            <a onclick="showPage('home')" class="back-button">
+                <span class="icon icon-arrow-left"></span> Volver al inicio
+            </a>
+            
+            <div class="legal-header">
+                <h1>Términos de Servicio</h1>
+                <p class="updated">Última actualización: Noviembre 2025</p>
+            </div>
+            
+            <div class="legal-section">
+                <h2>1. Aceptación de Términos</h2>
+                <p>Al acceder y usar LaFamilyAI, aceptas estar sujeto a estos Términos de Servicio. Si no estás de acuerdo con alguna parte de los términos, no puedes usar nuestro servicio.</p>
+                
+                <h2>2. Descripción del Servicio</h2>
+                <p>LaFamilyAI es un asistente familiar potenciado por IA que funciona a través de WhatsApp para ayudar a las familias a coordinar calendarios, tareas y recordatorios.</p>
+                
+                <h2>3. Cuentas de Usuario</h2>
+                <ul>
+                    <li>Debes tener al menos 18 años para crear una cuenta</li>
+                    <li>Eres responsable de mantener la seguridad de tu cuenta</li>
+                    <li>Debes proporcionar información precisa y completa</li>
+                    <li>No puedes transferir tu cuenta a otros</li>
+                    <li>Eres responsable de todas las actividades bajo tu cuenta</li>
+                </ul>
+                
+                <h2>4. Uso Aceptable</h2>
+                <p>Te comprometes a no:</p>
+                <ul>
+                    <li>Usar el servicio para propósitos ilegales</li>
+                    <li>Enviar spam o contenido malicioso</li>
+                    <li>Intentar acceder a cuentas de otros usuarios</li>
+                    <li>Interferir con el funcionamiento del servicio</li>
+                    <li>Hacer ingeniería inversa o copiar nuestro software</li>
+                    <li>Usar el servicio para acosar o amenazar a otros</li>
+                </ul>
+                
+                <h2>5. Suscripciones y Pagos</h2>
+                <ul>
+                    <li>El servicio opera bajo un modelo de suscripción mensual</li>
+                    <li>Los precios están sujetos a cambios con previo aviso</li>
+                    <li>Los pagos se procesan de forma segura a través de Stripe</li>
+                    <li>Las suscripciones se renuevan automáticamente</li>
+                    <li>Puedes cancelar en cualquier momento</li>
+                    <li>No ofrecemos reembolsos por períodos parciales</li>
+                </ul>
+                
+                <h2>6. Propiedad Intelectual</h2>
+                <p>LaFamilyAI y su contenido original, características y funcionalidad son propiedad de LaFamilyAI y están protegidos por leyes internacionales de derechos de autor, marcas registradas y otros derechos de propiedad intelectual.</p>
+                
+                <h2>7. Tus Datos</h2>
+                <ul>
+                    <li>Conservas todos los derechos sobre los datos que creas usando nuestro servicio</li>
+                    <li>Nos otorgas una licencia para procesar tus datos para proporcionar el servicio</li>
+                    <li>Podemos usar datos agregados anónimos para mejorar nuestro servicio</li>
+                    <li>Consulta nuestra Política de Privacidad para más detalles</li>
+                </ul>
+                
+                <h2>8. Limitación de Responsabilidad</h2>
+                <p>LaFamilyAI se proporciona "tal cual" sin garantías de ningún tipo. No somos responsables de:</p>
+                <ul>
+                    <li>Pérdida de datos o contenido</li>
+                    <li>Daños indirectos o consecuentes</li>
+                    <li>Interrupciones del servicio</li>
+                    <li>Errores en el procesamiento de IA</li>
+                    <li>Eventos perdidos o mal programados</li>
+                </ul>
+                
+                <h2>9. Terminación</h2>
+                <p>Podemos terminar o suspender tu cuenta inmediatamente, sin previo aviso, por cualquier motivo, incluyendo si violas estos Términos de Servicio. Puedes cancelar tu cuenta en cualquier momento a través de la configuración de tu cuenta.</p>
+                
+                <h2>10. Cambios en los Términos</h2>
+                <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Te notificaremos sobre cambios materiales. El uso continuado del servicio después de los cambios constituye aceptación de los nuevos términos.</p>
+                
+                <h2>11. Ley Aplicable</h2>
+                <p>Estos términos se regirán e interpretarán de acuerdo con las leyes de España, sin considerar sus disposiciones sobre conflictos de leyes.</p>
+                
+                <div class="contact-box">
+                    <strong>¿Preguntas sobre estos términos?</strong>
+                    <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <p>© 2025 LaFamilyAI - Coordinación familiar con IA</p>
+                    <div class="footer-links">
+                        <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
+                        <a onclick="showPage('privacy')">Privacidad</a>
+                        <a onclick="showPage('terms')">Términos</a>
+                        <a onclick="showPage('deletion')">Eliminar Datos</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Data Deletion Page -->
+    <div id="deletion-page" class="page-hidden legal-page">
+        <header>
+            <div class="container">
+                <nav>
+                    <a onclick="showPage('home')" class="logo">LaFamilyAI</a>
+                    <div class="nav-links">
+                        <a onclick="showPage('home'); setTimeout(() => scrollToSection('pricing'), 100)">Precio</a>
+                        <a onclick="showPage('home'); setTimeout(() => scrollToSection('faq'), 100)">FAQ</a>
+                        <a onclick="showPage('home'); setTimeout(() => scrollToSection('contact'), 100)">Contacto</a>
+                    </div>
+                    <a href="https://app.lafamilyai.com/en/signup" class="btn btn-primary">Comenzar ahora</a>
+                </nav>
+            </div>
+        </header>
+        
+        <div class="legal-content">
+            <a onclick="showPage('home')" class="back-button">
+                <span class="icon icon-arrow-left"></span> Volver al inicio
+            </a>
+            
+            <div class="legal-header">
+                <h1>Eliminación de Datos</h1>
+                <p class="updated">Información sobre cómo eliminar tus datos de LaFamilyAI</p>
+            </div>
+            
+            <div class="legal-section">
+                <h2>Tu Derecho a la Eliminación de Datos</h2>
+                <p>En LaFamilyAI, respetamos tu derecho a controlar tus datos personales. Puedes solicitar la eliminación completa de tus datos en cualquier momento.</p>
+                
+                <h2>Qué Datos Se Eliminarán</h2>
+                <p>Cuando solicites la eliminación de tus datos, eliminaremos permanentemente:</p>
+                <ul>
+                    <li>Tu información de cuenta (nombre, correo electrónico, teléfono)</li>
+                    <li>Todos los miembros de tu familia y sus datos</li>
+                    <li>Todos los eventos de calendario creados a través de LaFamilyAI</li>
+                    <li>Historial de mensajes y conversaciones</li>
+                    <li>Tareas y recordatorios</li>
+                    <li>Configuraciones y preferencias</li>
+                </ul>
+                
+                <h2>Qué No Se Elimina</h2>
+                <p>Ten en cuenta que la eliminación de datos de LaFamilyAI no afecta:</p>
+                <ul>
+                    <li><strong>Google Calendar:</strong> Los eventos que ya están sincronizados permanecerán en tu Google Calendar. Debes eliminarlos manualmente desde Google Calendar si lo deseas.</li>
+                    <li><strong>WhatsApp:</strong> El historial de mensajes en tu aplicación de WhatsApp no se elimina automáticamente.</li>
+                    <li><strong>Copias de seguridad:</strong> Pueden existir copias en nuestras copias de seguridad por hasta 30 días.</li>
+                </ul>
+                
+                <h2>Cómo Solicitar la Eliminación</h2>
+                <p>Tienes dos opciones para eliminar tus datos:</p>
+                
+                <h3>Opción 1: A través de tu cuenta</h3>
+                <ol>
+                    <li>Inicia sesión en tu cuenta de LaFamilyAI</li>
+                    <li>Ve a Configuración → Cuenta</li>
+                    <li>Haz clic en "Eliminar mi cuenta"</li>
+                    <li>Confirma la eliminación</li>
+                </ol>
+                
+                <h3>Opción 2: Contactando con soporte</h3>
+                <div class="contact-box">
+                    <strong>Envíanos un correo electrónico:</strong>
+                    <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
+                    <p style="margin-top: 0.5rem; color: #6b7280;">Incluye tu correo electrónico registrado y número de teléfono de WhatsApp para verificación.</p>
+                </div>
+                
+                <h2>Tiempo de Procesamiento</h2>
+                <p>La eliminación de datos se procesará de la siguiente manera:</p>
+                <ul>
+                    <li><strong>Eliminación inmediata:</strong> Tu cuenta quedará inaccesible inmediatamente</li>
+                    <li><strong>30 días:</strong> Eliminación completa de todos los datos de nuestros sistemas de producción</li>
+                    <li><strong>90 días:</strong> Eliminación de todas las copias de seguridad</li>
+                </ul>
+                
+                <h2>Después de la Eliminación</h2>
+                <p>Una vez que tus datos sean eliminados:</p>
+                <ul>
+                    <li>No podrás recuperar tu cuenta ni tus datos</li>
+                    <li>Dejarás de recibir cualquier notificación de LaFamilyAI</li>
+                    <li>Tu suscripción será cancelada automáticamente</li>
+                    <li>No se procesarán más cargos</li>
+                </ul>
+                
+                <h2>Retención Legal</h2>
+                <p>En casos limitados, podemos estar legalmente obligados a retener cierta información, como:</p>
+                <ul>
+                    <li>Registros de transacciones para fines fiscales</li>
+                    <li>Datos requeridos por investigaciones legales en curso</li>
+                    <li>Información necesaria para resolver disputas</li>
+                </ul>
+                
+                <h2>Preguntas</h2>
+                <p>Si tienes alguna pregunta sobre la eliminación de datos, no dudes en contactarnos en <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a></p>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <p>© 2025 LaFamilyAI - Coordinación familiar con IA</p>
+                    <div class="footer-links">
+                        <a href="mailto:cb@lafamilyai.com">cb@lafamilyai.com</a>
+                        <a onclick="showPage('privacy')">Privacidad</a>
+                        <a onclick="showPage('terms')">Términos</a>
+                        <a onclick="showPage('deletion')">Eliminar Datos</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Mobile CTA (shows when scrolling on mobile) -->
+    <div id="floating-cta" class="floating-cta">
+        <a href="https://app.lafamilyai.com/en/signup" class="btn btn-primary btn-lg">
+            Empezar gratis 30 días
+        </a>
+    </div>
+
+    <script>
+        // Page navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.getElementById('home-page').classList.add('page-hidden');
+            document.getElementById('privacy-page').classList.add('page-hidden');
+            document.getElementById('terms-page').classList.add('page-hidden');
+            document.getElementById('deletion-page').classList.add('page-hidden');
+            
+            // Show requested page
+            if (pageName === 'home') {
+                document.getElementById('home-page').classList.remove('page-hidden');
+            } else if (pageName === 'privacy') {
+                document.getElementById('privacy-page').classList.remove('page-hidden');
+            } else if (pageName === 'terms') {
+                document.getElementById('terms-page').classList.remove('page-hidden');
+            } else if (pageName === 'deletion') {
+                document.getElementById('deletion-page').classList.remove('page-hidden');
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Smooth scroll to section
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        // FAQ toggle
+        function toggleFaq(element) {
+            const answer = element.querySelector('.faq-answer');
+            const toggle = element.querySelector('.faq-toggle');
+            
+            answer.classList.toggle('show');
+            toggle.classList.toggle('rotate');
+        }
+        
+        // Cookie consent (you can implement this based on your needs)
+        function showCookieConsent() {
+            const consent = localStorage.getItem('cookieConsent');
+            if (!consent) {
+                document.querySelector('.cookie-consent').classList.add('show');
+            }
+        }
+        
+        function acceptCookies() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.querySelector('.cookie-consent').classList.remove('show');
+        }
+        
+        function declineCookies() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.querySelector('.cookie-consent').classList.remove('show');
+        }
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            showCookieConsent();
+            initFloatingCTA();
+        });
+        
+        // Floating CTA for mobile
+        function initFloatingCTA() {
+            const floatingCTA = document.getElementById('floating-cta');
+            const hero = document.querySelector('.hero');
+            
+            if (!floatingCTA || !hero) return;
+            
+            let lastScroll = 0;
+            let ticking = false;
+            
+            window.addEventListener('scroll', () => {
+                lastScroll = window.scrollY;
+                
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateFloatingCTA(lastScroll, hero, floatingCTA);
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        }
+        
+        function updateFloatingCTA(scrollY, hero, floatingCTA) {
+            // Only show on mobile
+            if (window.innerWidth >= 768) {
+                floatingCTA.classList.remove('show');
+                return;
+            }
+            
+            const heroBottom = hero.offsetTop + hero.offsetHeight;
+            
+            // Show when scrolled past hero section
+            if (scrollY > heroBottom) {
+                floatingCTA.classList.add('show');
+            } else {
+                floatingCTA.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>
